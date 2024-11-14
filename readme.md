@@ -2,11 +2,6 @@
 Multi-agent system based on a langchain.
 Telegram is used as a user interface.
 
-
-# How Multi-Agent Systems Work: Weather Forecast Example
-
-# Multi-Agent Systems: A Practical Guide
-
 ## System Overview
 A multi-agent system consists of several specialized agents, each performing their role under supervisor guidance.
 
