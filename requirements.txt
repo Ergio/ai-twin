@@ -28,6 +28,7 @@ langgraph==0.2.46
 langgraph-checkpoint==2.0.3
 langgraph-sdk==0.1.35
 langsmith==0.1.142
+langchain-experimental==0.3.3
 marshmallow==3.23.1
 msgpack==1.1.0
 multidict==6.1.0

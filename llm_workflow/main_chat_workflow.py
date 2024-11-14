@@ -1,6 +1,7 @@
 from typing import Any, Optional, Dict, List
 from langgraph.checkpoint.base import CheckpointTuple
-# from flask_app import app
+from llm_workflow.agents.python_agent import PythonAgent
+from llm_workflow.agents.web_researcher_agent import WebResearcherAgent
 from llm_workflow.core.core import MultiAgentChatbot
 from langchain_core.messages import AnyMessage
 from langgraph.checkpoint.memory import MemorySaver
@@ -20,6 +21,8 @@ class MainChatWorkflow:
 
         agents_team = [
             SupportAgent(),
+            WebResearcherAgent(),
+            PythonAgent(),
         ]
 
         self.mac = MultiAgentChatbot(team = agents_team, memory = self.memory)
