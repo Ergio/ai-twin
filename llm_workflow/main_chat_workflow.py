@@ -1,12 +1,12 @@
 from typing import Any, Optional, Dict, List
 from langgraph.checkpoint.base import CheckpointTuple
+from llm_workflow.agents.personal_info_agent import PersonalInfoAgent
 from llm_workflow.agents.python_agent import PythonAgent
 from llm_workflow.agents.web_researcher_agent import WebResearcherAgent
 from llm_workflow.core.core import MultiAgentChatbot
 from langchain_core.messages import AnyMessage
 from langgraph.checkpoint.memory import MemorySaver
 from typing import List
-from llm_workflow.agents.support_agent import SupportAgent
 
 class MainChatWorkflow:
     def __init__(self):
@@ -20,7 +20,7 @@ class MainChatWorkflow:
 
 
         agents_team = [
-            SupportAgent(),
+            PersonalInfoAgent(),
             WebResearcherAgent(),
             PythonAgent(),
         ]
@@ -39,6 +39,7 @@ class MainChatWorkflow:
                 "content": msg.content,
                 "id": msg.id,
             }
+
         formatted_messages = [format_messages(msg) for msg in messages if msg.type in ['human', 'ai']]
 
         filtered_messages = []

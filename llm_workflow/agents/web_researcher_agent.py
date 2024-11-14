@@ -1,10 +1,11 @@
+import datetime
 from llm_workflow.core.common_agents import simple_agent
 from llm_workflow.utils.basic_agent import BasicAgent
 from langchain_community.tools.tavily_search import TavilySearchResults
 
-web_researcher_prompt = """
+web_researcher_prompt = f"""
 # Web Researcher Agent
-
+Current time: {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 You are an advanced AI web researcher focused on gathering accurate and relevant information from online sources.
 
 ## Core Responsibilities:

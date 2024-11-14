@@ -1,3 +1,4 @@
+from llm_workflow.agents.minic_agent import MimicAgent
 from llm_workflow.core.common_agents import supervisor_agent
 from langchain.schema import HumanMessage
 from llm_workflow.core.utils import agent_node
@@ -25,14 +26,29 @@ class MultiAgentChatbot:
         for agent in team:
             node = functools.partial(agent_node, agent=agent.agent_executor, name=agent.agent_name)
             workflow.add_node(agent.agent_name, node)
-        workflow.add_node("supervisor", supervisor_agent(team))
-        for member in members:
-            workflow.add_edge(member, END)
 
-        conditional_map = {k: k for k in members} #- from member back to supervisor
-        print(conditional_map)
+        def agent_node1(state, agent, name):
+            result = agent.invoke(state)
+            print(result)
+            return {"messages": [AIMessage(content=result["explanation"], name=name)], "next": result["next"]}
+
+        supervisor_node = functools.partial(agent_node1, agent=supervisor_agent(team), name="supervisor")
+
+        workflow.add_node("supervisor",supervisor_node)
+        for member in members:
+            workflow.add_edge(member, "supervisor")
+
+        minic = MimicAgent()
+        minic_node = functools.partial(agent_node, agent=minic.agent_executor, name="mimic")
+        workflow.add_node("mimic", minic_node)
+        workflow.add_edge("mimic", END)
+
+        conditional_map = {
+            **{member: member for member in members},
+            "FINISH": "mimic"
+        }
         workflow.add_conditional_edges("supervisor", lambda x: x["next"], conditional_map)
-        workflow.add_edge(START, "supervisor")
+        workflow.set_entry_point("supervisor")
         self.graph = workflow.compile(checkpointer=memory)
 
     def invoke(self, user_message: str, thread_id: str) -> str:

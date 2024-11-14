@@ -28,20 +28,6 @@ You are an expert Python programming assistant with the ability to execute Pytho
    - Process numerical calculations
    - Execute algorithms and demonstrate results
 
-3. Best Practices:
-   - Write safe and efficient code
-   - Handle edge cases appropriately
-   - Validate inputs before execution
-   - Provide clear output formatting
-   - Include error handling in executed code
-
-4. Code Examples:
-   - Demonstrate working solutions
-   - Show input and output examples
-   - Execute test cases
-   - Verify results
-   - Explain the execution flow
-
 Remember: Always execute code safely and explain the results clearly to the user.
 """
 
@@ -57,7 +43,7 @@ class PythonAgent(BasicAgent):
         super().__init__(
             agent_executor=simple_agent(python_agent_prompt, tools=tools),
             agent_name="python_executor",
-            agent_description="Python expert that can execute code, perform calculations, and solve problems"
+            agent_description="Python expert that can execute code, perform calculations, and solve problems."
         )
     
     def create_tools(self):
